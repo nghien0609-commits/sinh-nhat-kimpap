@@ -1,0 +1,1108 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* ==============================
+   1. CÀI ĐẶT CHUNG
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --yellow: #fff3d8;
+    --cream: #fffaf2;
+    --lavender: #eee6f7;
+    --purple: #b9a2d1;
+    --pink: #f5d6e0;
+    --dark-pink: #d99bad;
+    --brown: #897866;
+    --white: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--brown);
+    background: var(--cream);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.screen {
+    display: none;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    padding: 55px 20px;
+    overflow: hidden;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.screen.active {
+    display: flex;
+    animation: screenAppear 0.8s ease both;
+}
+
+@keyframes screenAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 45px);
+    font-weight: 500;
+    color: #a98778;
+    margin: 13px 0;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+p {
+    line-height: 1.8;
+}
+
+.small-title {
+    color: #b49bc8;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+}
+
+button:not(.close-modal) {
+    padding: 13px 27px;
+    margin-top: 20px;
+    border-radius: 30px;
+    background: #e8c5d2;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 5px 15px #d9afbd35;
+}
+
+button:not(.close-modal):hover {
+    background: #d9a9ba;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px #d9afbd55;
+}
+
+/* Hoa nhỏ trang trí */
+
+#quizScreen::before,
+#countdownScreen::before,
+#wishScreen::before,
+#cakeScreen::before {
+    content: "✿　　❀　　 ✿　　 ❀　　✿";
+    position: absolute;
+    top: 8%;
+    left: 3%;
+    color: #c5b0dc;
+    font-size: 19px;
+    letter-spacing: 10px;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+#quizScreen::after,
+#countdownScreen::after,
+#wishScreen::after,
+#cakeScreen::after {
+    content: "❀　　 ✿　　 ❀　　 ✿";
+    position: absolute;
+    bottom: 8%;
+    right: 3%;
+    color: #c5b0dc;
+    font-size: 19px;
+    letter-spacing: 9px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ==============================
+   2. MÀN HÌNH CÂU ĐỐ
+============================== */
+
+#quizScreen {
+    background:
+        radial-gradient(circle at 15% 20%, #eee5f6 0 2px, transparent 3px),
+        radial-gradient(circle at 85% 75%, #e8dff2 0 2px, transparent 3px),
+        linear-gradient(135deg, #fffaf1, #fff3d8);
+}
+
+.flower {
+    position: absolute;
+    color: #bba5d2;
+    pointer-events: none;
+}
+
+.flower-one {
+    top: 9%;
+    right: 12%;
+    font-size: 65px;
+    animation: flowerFloat 4s ease-in-out infinite;
+}
+
+@keyframes flowerFloat {
+    50% {
+        transform: translateY(-10px) rotate(12deg);
+    }
+}
+
+.quiz-card,
+.wish-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 520px);
+    padding: 42px 28px;
+    background: #ffffffd9;
+    border: 1px solid #f0e4d6;
+    border-radius: 28px;
+    box-shadow: 0 15px 45px #cdbba522;
+    backdrop-filter: blur(5px);
+}
+
+.quiz-card > p:not(.small-title) {
+    font-size: 14px;
+}
+
+.quiz-card h2 {
+    font-size: 22px;
+    color: #a98b80;
+}
+
+/* Bốn ô nhập ngày sinh */
+
+.date-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0 15px;
+}
+
+.date-inputs span {
+    font-size: 24px;
+    color: #c0a9c9;
+    margin: 0 3px;
+}
+
+.date-digit {
+    width: 48px;
+    height: 55px;
+    margin: 0;
+    padding: 0;
+    border: 1.5px solid #eadde9;
+    border-radius: 13px;
+    outline: none;
+    background: #fffdfb;
+    color: #9c83a9;
+    text-align: center;
+    font-size: 23px;
+    font-weight: 700;
+    box-shadow: 0 3px 10px #d9c9df25;
+    transition: 0.2s;
+}
+
+.date-digit:focus {
+    border-color: #bba4d0;
+    background: #faf6ff;
+    box-shadow: 0 0 0 4px #e9def455;
+}
+
+#quizMessage {
+    min-height: 25px;
+    font-size: 13px;
+}
+
+/* ==============================
+   3. ĐẾM NGƯỢC
+============================== */
+
+#countdownScreen {
+    background: linear-gradient(145deg, #fffaf0, #fff0d2, #f1eafa);
+}
+
+.countdown-flower {
+    color: #bba5d2;
+    font-size: 35px;
+    margin-bottom: 12px;
+    animation: flowerFloat 3s infinite ease-in-out;
+}
+
+.countdown-circle {
+    width: 210px;
+    height: 210px;
+    margin: 25px 0;
+    border: 2px solid #e6d5ed;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff88;
+    box-shadow:
+        0 0 0 12px #ffffff45,
+        0 15px 40px #c8b3d233;
+}
+
+#countdownNumber {
+    font-family: 'Playfair Display', serif;
+    font-size: 115px;
+    font-weight: 500;
+    color: #c4a8cf;
+    animation: numberPop 0.8s ease;
+}
+
+@keyframes numberPop {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==============================
+   4. MÀN HÌNH KỶ NIỆM
+============================== */
+
+#memoryScreen {
+    min-height: 100vh;
+    background: linear-gradient(140deg, #fffaf0, #f4eef9);
+    justify-content: flex-start;
+    padding-top: 55px;
+}
+
+.description {
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.envelope-area {
+    position: relative;
+    width: min(94vw, 650px);
+    height: 440px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Phong thư */
+
+.envelope {
+    position: absolute;
+    z-index: 5;
+    bottom: 65px;
+    width: 270px;
+    height: 175px;
+    cursor: pointer;
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background: #eadfcf;
+    box-shadow: 0 8px 20px #88765b25;
+}
+
+.letter {
+    position: absolute;
+    z-index: 1;
+    left: 5%;
+    bottom: 10px;
+    width: 90%;
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fffdf7;
+    color: #b49a80;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+
+.envelope-flap {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 135px solid transparent;
+    border-right: 135px solid transparent;
+    border-top: 105px solid #dfcfb9;
+    transform-origin: top;
+    transition: transform 0.8s ease;
+}
+
+.envelope-front {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: #f4e8d8;
+    clip-path: polygon(0 0, 50% 60%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope-heart {
+    position: absolute;
+    z-index: 4;
+    top: 62%;
+    left: 46%;
+    color: #d69bad;
+    font-size: 28px;
+}
+
+.envelope.open {
+    opacity: 0;
+    transform: translateY(90px) scale(0.8);
+    pointer-events: none;
+}
+
+.envelope.open .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.click-hint {
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+    font-size: 13px;
+    color: #aa987f;
+}
+
+/* Ảnh Polaroid */
+
+.photos {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.polaroid {
+    position: absolute;
+    z-index: 2;
+    width: 112px;
+    padding: 8px 8px 24px;
+    background: #fff;
+    box-shadow: 0 7px 20px #6c5b5030;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+    transform: translateY(100px) scale(0.5);
+    transition: opacity 0.7s ease, transform 0.8s ease;
+}
+
+.polaroid img {
+    display: block;
+    width: 100%;
+    height: 105px;
+    object-fit: cover;
+}
+
+.polaroid p {
+    margin-top: 6px;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    color: #8f8178;
+}
+
+.photos.open {
+    pointer-events: auto;
+}
+
+.photos.open .polaroid {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.photos.open .photo1 {
+    left: 2%;
+    top: 7%;
+    transform: rotate(-12deg);
+    transition-delay: 0.1s;
+}
+
+.photos.open .photo2 {
+    left: 21%;
+    top: 0;
+    transform: rotate(8deg);
+    transition-delay: 0.25s;
+}
+
+.photos.open .photo3 {
+    right: 21%;
+    top: 0;
+    transform: rotate(-7deg);
+    transition-delay: 0.4s;
+}
+
+.photos.open .photo4 {
+    right: 2%;
+    top: 8%;
+    transform: rotate(12deg);
+    transition-delay: 0.55s;
+}
+
+.photos.open .photo5 {
+    left: 19%;
+    bottom: 5%;
+    transform: rotate(-7deg);
+    transition-delay: 0.7s;
+}
+
+.photos.open .photo6 {
+    right: 19%;
+    bottom: 5%;
+    transform: rotate(8deg);
+    transition-delay: 0.85s;
+}
+
+.polaroid:hover {
+    z-index: 10;
+    transform: scale(1.1) rotate(0deg) !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.next-button {
+    margin-top: 5px;
+}
+
+/* ==============================
+   5. PHÓNG TO ẢNH
+============================== */
+
+.photo-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    padding: 25px;
+    background: #28212bd9;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: zoom-out;
+}
+
+.photo-modal.show {
+    display: flex;
+    animation: screenAppear 0.3s ease;
+}
+
+.photo-modal img {
+    max-width: min(90vw, 650px);
+    max-height: 72vh;
+    object-fit: contain;
+    padding: 12px 12px 35px;
+    background: #fff;
+    box-shadow: 0 10px 50px #0005;
+    cursor: default;
+}
+
+.photo-modal p {
+    margin-top: 15px;
+    color: white;
+    font-family: 'Playfair Display', serif;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    background: transparent;
+    font-size: 38px;
+}
+
+/* ==============================
+   6. LỜI CHÚC
+============================== */
+
+#wishScreen {
+    background: linear-gradient(135deg, #f4edfa, #fffaf0);
+}
+
+.wish-card {
+    border-color: #e8dced;
+}
+
+.flower-decoration {
+    margin: 18px;
+    color: #b7a0d0;
+    font-size: 28px;
+    letter-spacing: 8px;
+}
+
+.wish-text {
+    text-align: left;
+    font-size: 15px;
+    line-height: 2;
+}
+
+/* ==============================
+   7. BÁNH SINH NHẬT
+============================== */
+
+#cakeScreen {
+    background: linear-gradient(145deg, #fff8f3, #f9e9f0, #f1eafa);
+}
+
+.cake {
+    position: relative;
+    width: 280px;
+    height: 270px;
+    margin: 35px 0 5px;
+}
+
+/* Đĩa bánh */
+
+.cake-plate {
+    position: absolute;
+    z-index: 1;
+    bottom: 8px;
+    left: 10px;
+    width: 260px;
+    height: 19px;
+    border-radius: 50%;
+    background: linear-gradient(#f5e6ed, #dfc8d8);
+    box-shadow: 0 7px 12px #b58c9b35;
+}
+
+/* Tầng bánh */
+
+.cake-bottom,
+.cake-middle,
+.cake-top {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 13px 13px 17px 17px;
+    box-shadow: inset 0 -8px 0 #c77f9940;
+}
+
+.cake-bottom {
+    z-index: 2;
+    bottom: 25px;
+    width: 230px;
+    height: 75px;
+    background: linear-gradient(135deg, #e9a4b8, #f2bdcb);
+}
+
+.cake-middle {
+    z-index: 3;
+    bottom: 90px;
+    width: 190px;
+    height: 60px;
+    background: linear-gradient(135deg, #f5c4d2, #f9d9e1);
+}
+
+.cake-top {
+    z-index: 4;
+    bottom: 142px;
+    width: 155px;
+    height: 38px;
+    border-radius: 50% 50% 12px 12px;
+    background: linear-gradient(135deg, #ffe2e9, #f7c8d8);
+}
+
+/* Kẹo và dâu tây trên bánh */
+
+.cake-decorations {
+    position: absolute;
+    z-index: 7;
+    bottom: 170px;
+    left: 50%;
+    width: 200px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 24px;
+}
+
+.cake-decorations span:nth-child(2),
+.cake-decorations span:nth-child(4) {
+    font-size: 19px;
+    transform: translateY(-7px) rotate(-12deg);
+}
+
+/* Nến */
+
+.candle {
+    position: absolute;
+    z-index: 8;
+    left: 50%;
+    bottom: 178px;
+    width: 12px;
+    height: 48px;
+    transform: translateX(-50%);
+    border: 1px solid #e9c5cf;
+    border-radius: 3px;
+    background: repeating-linear-gradient(
+        135deg,
+        #fffaf0 0 5px,
+        #e9b8ca 5px 9px
+    );
+}
+
+.flame {
+    position: absolute;
+    top: -25px;
+    left: -2px;
+    width: 15px;
+    height: 23px;
+    border-radius: 50% 50% 50% 0;
+    background: #ffc65b;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 18px #ffc65b;
+    animation: flicker 0.5s infinite alternate;
+}
+
+@keyframes flicker {
+    from {
+        transform: rotate(-45deg) scale(1);
+    }
+
+    to {
+        transform: rotate(-40deg) scale(0.85);
+    }
+}
+
+.flame.off {
+    display: none;
+}
+
+/* Trạng thái thổi nến */
+
+#blowButton {
+    position: relative;
+    z-index: 2;
+}
+
+#micStatus {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #a88e9b;
+}
+
+#finalMessage {
+    min-height: 35px;
+    margin-top: 15px;
+    color: #c17b91;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+}
+
+/* Pháo giấy */
+
+.confetti {
+    position: fixed;
+    z-index: 2000;
+    top: -15px;
+    width: 9px;
+    height: 14px;
+    pointer-events: none;
+    animation: confettiFall 3.5s linear forwards;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ==============================
+   8. ĐIỆN THOẠI
+============================== */
+
+@media (max-width: 600px) {
+    .screen {
+        padding: 40px 15px;
+    }
+
+    .quiz-card,
+    .wish-card {
+        padding: 32px 20px;
+    }
+
+    .flower-one {
+        top: 4%;
+        right: 5%;
+        font-size: 45px;
+    }
+
+    .date-inputs {
+        gap: 7px;
+    }
+
+    .date-digit {
+        width: 43px;
+        height: 50px;
+    }
+
+    .countdown-circle {
+        width: 175px;
+        height: 175px;
+    }
+
+    #countdownNumber {
+        font-size: 95px;
+    }
+
+    #memoryScreen {
+        padding-top: 40px;
+    }
+
+    .envelope-area {
+        width: 100%;
+        height: 430px;
+    }
+
+    .envelope {
+        width: 230px;
+        height: 155px;
+        bottom: 65px;
+    }
+
+    .envelope-flap {
+        border-left-width: 115px;
+        border-right-width: 115px;
+        border-top-width: 90px;
+    }
+
+    .polaroid {
+        width: 88px;
+        padding: 5px 5px 19px;
+    }
+
+    .polaroid img {
+        height: 80px;
+    }
+
+    .polaroid p {
+        font-size: 8px;
+    }
+
+    .photos.open .photo1 {
+        left: 1%;
+        top: 7%;
+    }
+
+    .photos.open .photo2 {
+        left: 26%;
+        top: 1%;
+    }
+
+    .photos.open .photo3 {
+        right: 26%;
+        top: 1%;
+    }
+
+    .photos.open .photo4 {
+        right: 1%;
+        top: 7%;
+    }
+
+    .photos.open .photo5 {
+        left: 15%;
+        bottom: 4%;
+    }
+
+    .photos.open .photo6 {
+        right: 15%;
+        bottom: 4%;
+    }
+
+    .photo-modal img {
+        max-width: 95vw;
+        max-height: 65vh;
+    }
+
+    .cake {
+        transform: scale(0.9);
+        margin: 20px 0 0;
+    }
+}
+
+@media (max-width: 370px) {
+    .polaroid {
+        width: 75px;
+    }
+
+    .polaroid img {
+        height: 68px;
+    }
+
+    .photos.open .photo2 {
+        left: 24%;
+    }
+
+    .photos.open .photo3 {
+        right: 24%;
+    }
+}
+/* ẢNH POLAROID */
+.polaroid {
+    background: #fff;
+    padding: 12px 12px 10px;
+    padding-bottom: 12px;
+    height: 230px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.polaroid img {
+    display: block;
+    width: 100%;
+    height: 165px;
+    object-fit: cover;
+    border: 1px solid #eee3e9;
+}
+
+.photo-caption {
+    margin: 10px 0 0;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    color: #a98791;
+}
+
+/* Đưa hai ảnh cuối lên cao hơn */
+.photo5,
+.photo6 {
+    top: 0;
+    transform: translateY(-25px) rotate(-7deg);
+}
+
+/* Dòng chữ cuối */
+#clickHint {
+    position: relative;
+    margin-top: 5px;
+    text-align: center;
+    color: #a98791;
+}
+
+/* SẮP XẾP LẠI 6 ẢNH KỶ NIỆM */
+#memoryScreen {
+    min-height: 100vh;
+    padding: 55px 20px 35px;
+    box-sizing: border-box;
+}
+
+.envelope-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photos {
+    position: relative !important;
+    display: grid;
+    grid-template-columns: repeat(3, 155px);
+    justify-content: center;
+    align-items: center;
+    gap: 25px 30px;
+    width: 100%;
+    max-width: 650px;
+    margin: 25px auto 20px;
+}
+
+.polaroid {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 155px;
+    height: 220px;
+    padding: 10px 10px 12px;
+    box-sizing: border-box;
+    background: white;
+    transform: rotate(0deg);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.polaroid:nth-child(odd) {
+    transform: rotate(-4deg);
+}
+
+.polaroid:nth-child(even) {
+    transform: rotate(4deg);
+}
+
+.polaroid:hover {
+    transform: translateY(-8px) rotate(0deg);
+}
+
+.polaroid img {
+    width: 100%;
+    height: 160px;
+    display: block;
+    object-fit: cover;
+}
+
+.photo-caption {
+    margin-top: 10px;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 12px;
+    color: #a98791;
+}
+
+#clickHint {
+    position: relative;
+    margin: 15px auto;
+    text-align: center;
+}
+
+#nextMemory {
+    display: block;
+    margin: 20px auto;
+}
+
+@media (max-width: 600px) {
+    .photos {
+        grid-template-columns: repeat(2, 140px);
+        gap: 20px;
+    }
+
+    .polaroid {
+        width: 140px;
+        height: 205px;
+    }
+
+    .polaroid img {
+        height: 145px;
+    }
+}
+/* Thu gọn khoảng trống phía trên và dưới ảnh */
+.photos {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.envelope-area {
+    gap: 0;
+}
+
+#nextMemory {
+    margin-top: 15px;
+}
+
+/* SỬA BỐ CỤC TRANG KỶ NIỆM */
+#memoryScreen {
+    min-height: 100vh;
+    height: auto !important;
+    padding: 45px 20px 50px;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.envelope-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto !important;
+    min-height: 0 !important;
+    gap: 15px;
+}
+
+#clickHint {
+    position: relative !important;
+    margin: 15px auto !important;
+}
+
+/* Ảnh kỷ niệm */
+.photos {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 155px);
+    justify-content: center;
+    gap: 25px 30px;
+    width: 100%;
+    height: auto !important;
+    margin: 20px auto !important;
+}
+
+.polaroid {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 155px;
+    height: 220px;
+    margin: 0;
+}
+
+/* Nút tiếp tục nằm riêng dưới ảnh */
+#nextMemory {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    display: block;
+    margin: 25px auto 0 !important;
+    z-index: 5;
+}
+
+#nextMemory.hidden {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .photos {
+        grid-template-columns: repeat(2, 140px);
+        gap: 20px;
+    }
+
+    .polaroid {
+        width: 140px;
+        height: 205px;
+    }
+}

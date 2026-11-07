@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Kimpap 💌</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- MÀN HÌNH CÂU ĐỐ -->
+    <section id="quizScreen" class="screen active">
+        <div class="flower flower-one">✿</div>
+        <div class="quiz-card">
+            <p class="small-title">A LITTLE SURPRISE FOR YOU</p>
+            <h1>Xin chào Kimpap ♡</h1>
+            <p>Trước khi mở món quà này, bà phải trả lời một câu hỏi nhé!</p>
+            <h2>Sinh nhật của tui là ngày nào?</h2>
+
+
+            <div class="date-inputs">
+                <input type="text" maxlength="1" class="date-digit" inputmode="numeric">
+                <input type="text" maxlength="1" class="date-digit" inputmode="numeric">
+                <span>/</span>
+                <input type="text" maxlength="1" class="date-digit" inputmode="numeric">
+                <input type="text" maxlength="1" class="date-digit" inputmode="numeric">
+            </div>
+            <p id="quizMessage"></p>
+            <button onclick="checkAnswer()">Mở món quà ♡</button>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH ĐẾM NGƯỢC -->
+
+    <section id="countdownScreen" class="screen">
+        <div class="countdown-flower">✿</div>
+        <p class="small-title">A SPECIAL DAY FOR YOU</p>
+
+        <div class="countdown-circle">
+            <span id="countdownNumber">3</span>
+        </div>
+
+        <h2>A little surprise awaits...</h2>
+        <p>Một món quà nhỏ dành riêng cho cậu ♡</p>
+    </section>
+
+
+    <!-- MÀN HÌNH KỶ NIỆM -->
+    <section id="memoryScreen" class="screen">
+        <p class="small-title">OUR LITTLE MEMORIES</p>
+        <div class="envelope-area">
+            <div class="envelope" id="envelope" onclick="openEnvelope()">
+                <div class="envelope-back"></div>
+                <div class="letter">
+                    <span>Our Memories</span>
+                    <span>♡</span>
+                </div>
+                <div class="envelope-flap"></div>
+                <div class="envelope-front"></div>
+                <div class="envelope-heart">♡</div>
+            </div>
+
+            <p class="click-hint" id="clickHint">Nhấn vào phong thư để mở nhé ♡</p>
+
+
+            <div class="photos" id="photos">
+
+                <div class="polaroid photo1" onclick="showPhoto(0)">
+                    <img src="images/ky niem 1.jpg" alt="Kỷ niệm 1">
+                    <p class="photo-caption">Memory No. 01 ♡</p>
+                </div>
+
+                <div class="polaroid photo2" onclick="showPhoto(1)">
+                    <img src="images/ky niem 2.jpg" alt="Kỷ niệm 2">
+                    <p class="photo-caption">Memory No. 02 ♡</p>
+                </div>
+
+                <div class="polaroid photo3" onclick="showPhoto(2)">
+                    <img src="images/ky niem 3.jpg" alt="Kỷ niệm 3">
+                    <p class="photo-caption">Memory No. 03 ♡</p>
+                </div>
+
+                <div class="polaroid photo4" onclick="showPhoto(3)">
+                    <img src="images/ky niem 4.jpg" alt="Kỷ niệm 4">
+                    <p class="photo-caption">Memory No. 04 ♡</p>
+                </div>
+
+                <div class="polaroid photo5" onclick="showPhoto(4)">
+                    <img src="images/ky niem 5.jpg" alt="Kỷ niệm 5">
+                    <p class="photo-caption">Memory No. 05 ♡</p>
+                </div>
+
+                <div class="polaroid photo6" onclick="showPhoto(5)">
+                    <img src="images/ky niem 6.jpg" alt="Kỷ niệm 6">
+                    <p class="photo-caption">Memory No. 06 ♡</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <button id="nextMemory" class="next-button hidden" onclick="showScreen('wishScreen')">
+            Tiếp tục ♡
+        </button>
+    </section>
+
+    <!-- PHÓNG TO ẢNH -->
+    <div class="photo-modal" id="photoModal" onclick="closePhoto()">
+        <button class="close-modal" onclick="closePhoto()">×</button>
+        <img id="modalImage" src="" alt="Ảnh kỷ niệm">
+        <p>♡ A precious memory ♡</p>
+    </div>
+
+    <!-- LỜI CHÚC -->
+    <section id="wishScreen" class="screen">
+        <div class="wish-card">
+            <p class="small-title">A LETTER FOR YOU</p>
+            <h1>Happy Birthday, Kimpap!</h1>
+            <div class="flower-decoration">✿ ❀ ✿</div>
+            <p class="wish-text">
+                Chúc cậu có một ngày sinh nhật thật vui vẻ và hạnh phúc.
+                Mong rằng tuổi mới sẽ mang đến cho cậu thật nhiều niềm vui,
+                những điều tốt đẹp và những kỷ niệm thật đáng nhớ.
+                <br><br>
+                Cảm ơn cậu vì đã xuất hiện và tạo nên những khoảnh khắc
+                thật đặc biệt. Mong rằng nụ cười sẽ luôn ở trên môi cậu.
+                <br><br>
+                Chúc mừng sinh nhật nhé! ♡
+            </p>
+            <button onclick="showScreen('cakeScreen')">Đến món quà cuối cùng ♡</button>
+        </div>
+    </section>
+
+    <!-- BÁNH SINH NHẬT -->
+
+    <section id="cakeScreen" class="screen">
+        <p class="small-title">A WISH JUST FOR YOU</p>
+        <h1>Happy Birthday!</h1>
+        <p>Hãy nhắm mắt và ước một điều thật đẹp nhé ♡</p>
+
+        <div class="cake">
+            <div class="cake-decorations">
+                <span>🍓</span>
+                <span>🍬</span>
+                <span>🍓</span>
+                <span>🍫</span>
+                <span>🍒</span>
+            </div>
+
+            <div class="candle">
+                <div class="flame" id="flame"></div>
+            </div>
+
+            <div class="cake-top"></div>
+            <div class="cake-middle"></div>
+            <div class="cake-bottom"></div>
+            <div class="cake-plate"></div>
+        </div>
+
+        <button id="blowButton" onclick="blowCandles()">
+            <span>🎤</span> Bật micro để thổi nến
+        </button>
+
+        <p id="micStatus">Cho phép sử dụng micro để thổi nến nhé!</p>
+        <p id="finalMessage"></p>
+
+        <button onclick="location.reload()">Xem lại từ đầu ↻</button>
+    </section>
+    <script src="script.js"></script>
+</body>
+
+</html>
